@@ -17,7 +17,6 @@ public class MouseListener implements MouseInputListener {
 	}
 	@Override
 	public void mouseClicked(MouseEvent e) {
-				
 		model.click();
 	}
 	@Override
@@ -34,6 +33,5 @@ public class MouseListener implements MouseInputListener {
 	@Override
 	public void mouseMoved(MouseEvent e) {
 		model.getCursorPoint().setLocation(e.getX(), e.getY());
-		//model.getFloyd().moveTowards(e.getX(),e.getY());
 	}
 }

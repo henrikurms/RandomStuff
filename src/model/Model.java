@@ -3,19 +3,13 @@ package model;
 import util.Null;
 import util.Observable;
 import util.Observer;
-import view.PointObserver;
 
 public abstract class Model {
 
-	protected Observable<Null> clickedObservable = new Observable<Null>();
-	protected Observable<Null> drawObservable = new Observable<Null>();
+	private Observable<Null> clickedObservable = new Observable<Null>();
+	private Observable<Null> drawObservable = new Observable<Null>();
 	protected PointModel cursorPoint = new PointModel(0, 0);
-	protected PointModel point = new PointModel(30,30);
-
-	public void addPointObserver(PointObserver pointObserver) {
-		point.addObserver(pointObserver);
-	}
-
+	
 	public void addClickedObserver(Observer<Null> observer) {
 		clickedObservable.addObserver(observer);
 	}

@@ -9,6 +9,7 @@ import util.Matrix;
 
 public class Floyd implements Drawable {
 	
+	private static final int SEPARATION_DISTANCE = 20;
 	public PointModel position;
 	private int speed = 8;
 	public Vector velocity = new Vector(0,0);
@@ -77,7 +78,7 @@ public class Floyd implements Drawable {
 				continue;
 			}
 			Vector distance = new Vector(position,floyd.position).negate();
-			if (distance.negate().getLength() < 20) {
+			if (distance.negate().getLength() < SEPARATION_DISTANCE) {
 				seperation = seperation.add(distance);
 //				p = p.add(new Vector(floyd.position));
 				v = v.add(floyd.velocity);
@@ -88,7 +89,7 @@ public class Floyd implements Drawable {
 		p = p.multiply(1/floyds.size());
 //		if (p.getLength() > 0 ) System.out.println(p);
 		Vector center = p.add(new Vector(position).negate());
-		velocity = velocity.add(center.multiply(999/1000));
+		velocity = velocity.add(center.multiply(999/1000)); // Doesn't work otherwise
 		velocity = velocity.add(v);
 		velocity = velocity.add(seperation);
 		velocity = velocity.add(getAcceleration(new Vector(position, cursorPoint)));

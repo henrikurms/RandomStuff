@@ -19,35 +19,16 @@ import control.MouseListener;
 
 public class MainPanel extends JPanel {
 	
-	public class ClickedObserver implements Observer<Null> {
-		@Override
-		public void update(Null t) {
-			boolean isClicked = isClicked();
-			clicked = true;
-			if (isClicked){
-				return;
-			}
-			new Thread(new Runnable() {
-				
-				@Override
-				public void run() {
-					model.run();
-				}
-			}).start();
-		}
-	}
-
 	private static final long serialVersionUID = 1L;
 	
+	private static final Dimension SIZE = new Dimension(900,500);
+	
 	private Model model = new FloydModel();
-
 	private boolean clicked = false;
-	public Observer<Null> clickedObserver = new ClickedObserver();
 
 	public MainPanel(){
-		setPreferredSize(new Dimension(900,500));
-//		model.addPointObserver(new PointObserver(this));
-		model.addClickedObserver(clickedObserver);
+		setPreferredSize(SIZE);
+		model.addClickedObserver(new ClickedObserver());
 		model.addDrawObserver(new DrawObserver());
 		MouseListener ml = new MouseListener(model);
 		this.addMouseListener(ml);
@@ -62,13 +43,20 @@ public class MainPanel extends JPanel {
 		}
 		
 	}
-
-	public boolean isClicked() {
-		return clicked;
-	}
-
-	private void drawCircle(int x, int y, Graphics g) {
-		g.fillOval(x-10, y-10, 20, 20);
+	
+	public class ClickedObserver implements Observer<Null> {
+		@Override
+		public void update(Null t) {
+			if (clicked) return;
+			clicked = true;
+			new Thread(new Runnable() {
+				
+				@Override
+				public void run() {
+					model.run();
+				}
+			}).start();
+		}
 	}
 
 	/* (non-Javadoc)
@@ -77,8 +65,7 @@ public class MainPanel extends JPanel {
 	@Override
 	public void paint(Graphics g) {
 		super.paint(g);
-		if (!clicked ) return;
-//		model.getFloyd().draw(g);
+		if (!clicked) return;
 		for (Drawable drawable : model.getDrawables()) {
 			drawable.draw(g);
 		}

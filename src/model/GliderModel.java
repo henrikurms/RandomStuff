@@ -1,13 +1,13 @@
 package model;
 
-public class ThrustModel extends Model {
+public class GliderModel extends Model{
 
 	protected PointModel point = new PointModel(30,30);
 
 	@Override
 	public void moveObjects() {
 		// TODO Auto-generated method stub
-
+		
 	}
 
 	@Override
@@ -15,5 +15,4 @@ public class ThrustModel extends Model {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
 }
